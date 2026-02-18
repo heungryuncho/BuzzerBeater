@@ -38,3 +38,9 @@ logs/
 
 ### Env ###
 .env
+
+### Agent Configuration ###
+.agent/
+
+### Local Study Materials ###
+study/

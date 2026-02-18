@@ -48,3 +48,16 @@ Strictly follow the separation of concerns:
 ## 5. Documentation (JavaDoc & Swagger)
 - Public methods in Services must have JavaDoc explaining *what* it does, not *how*.
 - Controller methods must have Swagger annotations (`@Operation`, `@ApiResponse`) to auto-generate API docs.
+
+---
+
+## 6. Git Commit Conventions (Conventional Commits)
+Follow the standard `type: subject` format.
+
+- **feat**: New feature (새로운 기능 추가)
+- **fix**: Bug fix (버그 수정)
+- **docs**: Documentation changes (문서 수정)
+- **style**: Formatting, semi-colons, no code change (코드 포맷팅, 오타 수정)
+- **refactor**: Refactoring production code (리팩토링)
+- **test**: Adding missing tests, refactoring tests (테스트 코드 추가/수정)
+- **chore**: Build tasks, package manager configs (빌드, 패키지 매니저 설정)

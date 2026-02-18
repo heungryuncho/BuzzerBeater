@@ -46,7 +46,5 @@ public class UserRepositoryTest {
         assertThat(savedUser.getCreatedAt()).isNotNull();
         assertThat(savedUser.getUpdatedAt()).isNotNull();
 
-        System.out.println("Created Date: " + savedUser.getCreatedAt());
-        System.out.println("Updated Date: " + savedUser.getUpdatedAt());
     }
 }

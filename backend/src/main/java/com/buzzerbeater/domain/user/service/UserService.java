@@ -28,7 +28,7 @@ public class UserService {
     private void validateDuplicateUser(String email) {
         userRepository.findByEmail(email)
                 .ifPresent(u -> {
-                    throw new IllegalArgumentException("이미 가입된 회원입니다."); // 추후 Custom Exception으로 변경
+                    throw new IllegalArgumentException("이미 가입된 회원입니다.");
                 });
     }
 }

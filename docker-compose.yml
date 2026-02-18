@@ -1,0 +1,18 @@
+
+name: buzzerbeater
+services:
+  db:
+    image: mysql:8.0
+    container_name: buzzerbeater-db
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: buzzerbeater
+      MYSQL_USER: root
+      MYSQL_PASSWORD: Aa!199093
+      TZ: Asia/Seoul
+    volumes:
+      - ./db_data:/var/lib/mysql
+    command: --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    restart: always

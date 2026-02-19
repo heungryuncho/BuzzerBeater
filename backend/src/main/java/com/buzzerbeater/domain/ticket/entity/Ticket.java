@@ -1,4 +1,4 @@
-package com.buzzerbeater.domain.reservation.entity;
+package com.buzzerbeater.domain.ticket.entity;
 
 import java.time.LocalDateTime;
 import com.buzzerbeater.domain.game.entity.Game;
@@ -15,8 +15,8 @@ import com.buzzerbeater.domain.common.BaseTimeEntity;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Entity
-@Table(name = "reservation")
-public class Reservation extends BaseTimeEntity {
+@Table(name = "ticket")
+public class Ticket extends BaseTimeEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -34,7 +34,7 @@ public class Reservation extends BaseTimeEntity {
     private LocalDateTime reservationTime;
 
     @Builder
-    public Reservation(Game game, User user, String seatNumber, Integer ticketCount, LocalDateTime reservationTime) {
+    public Ticket(Game game, User user, String seatNumber, Integer ticketCount, LocalDateTime reservationTime) {
         this.game = game;
         this.user = user;
         this.seatNumber = seatNumber;

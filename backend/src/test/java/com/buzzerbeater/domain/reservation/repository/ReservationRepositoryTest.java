@@ -3,7 +3,8 @@ package com.buzzerbeater.domain.reservation.repository;
 import com.buzzerbeater.config.JpaAuditingConfig;
 import com.buzzerbeater.domain.game.entity.Game;
 import com.buzzerbeater.domain.game.repository.GameRepository;
-import com.buzzerbeater.domain.reservation.entity.Reservation;
+import com.buzzerbeater.domain.ticket.entity.Ticket;
+import com.buzzerbeater.domain.ticket.repository.TicketRepository;
 import com.buzzerbeater.domain.user.entity.Role;
 import com.buzzerbeater.domain.user.entity.User;
 import com.buzzerbeater.domain.user.repository.UserRepository;
@@ -22,91 +23,91 @@ import static org.assertj.core.api.Assertions.assertThat;
 @Import(JpaAuditingConfig.class)
 public class ReservationRepositoryTest {
 
-    @Autowired
-    private ReservationRepository reservationRepository;
+        @Autowired
+        private TicketRepository reservationRepository;
 
-    @Autowired
-    private UserRepository userRepository;
+        @Autowired
+        private UserRepository userRepository;
 
-    @Autowired
-    private GameRepository gameRepository;
+        @Autowired
+        private GameRepository gameRepository;
 
-    @Test
-    @DisplayName("예약_저장_테스트")
-    void saveReservation() {
-        // given
-        User user = User.builder()
-                .email("test@buzzerbeater.com")
-                .password("pw")
-                .nickname("tester")
-                .role(Role.USER)
-                .build();
-        userRepository.save(user);
+        @Test
+        @DisplayName("예약_저장_테스트")
+        void saveReservation() {
+                // given
+                User user = User.builder()
+                                .email("test@buzzerbeater.com")
+                                .password("pw")
+                                .nickname("tester")
+                                .role(Role.USER)
+                                .build();
+                userRepository.save(user);
 
-        Game game = Game.builder()
-                .title("Game 1")
-                .homeTeam("A")
-                .awayTeam("B")
-                .stadium("Stadium")
-                .maxSeats(100)
-                .startTime(LocalDateTime.now())
-                .build();
-        gameRepository.save(game);
+                Game game = Game.builder()
+                                .title("Game 1")
+                                .homeTeam("A")
+                                .awayTeam("B")
+                                .stadium("Stadium")
+                                .maxSeats(100)
+                                .startTime(LocalDateTime.now())
+                                .build();
+                gameRepository.save(game);
 
-        Reservation reservation = Reservation.builder()
-                .user(user)
-                .game(game)
-                .seatNumber("A-1")
-                .ticketCount(2)
-                .reservationTime(LocalDateTime.now())
-                .build();
+                Ticket reservation = Ticket.builder()
+                                .user(user)
+                                .game(game)
+                                .seatNumber("A-1")
+                                .ticketCount(2)
+                                .reservationTime(LocalDateTime.now())
+                                .build();
 
-        // when
-        Reservation savedReservation = reservationRepository.save(reservation);
+                // when
+                Ticket savedReservation = reservationRepository.save(reservation);
 
-        // then
-        assertThat(savedReservation.getId()).isNotNull();
-        assertThat(savedReservation.getUser().getId()).isEqualTo(user.getId());
-        assertThat(savedReservation.getGame().getId()).isEqualTo(game.getId());
-        assertThat(savedReservation.getTicketCount()).isEqualTo(2);
-    }
+                // then
+                assertThat(savedReservation.getId()).isNotNull();
+                assertThat(savedReservation.getUser().getId()).isEqualTo(user.getId());
+                assertThat(savedReservation.getGame().getId()).isEqualTo(game.getId());
+                assertThat(savedReservation.getTicketCount()).isEqualTo(2);
+        }
 
-    @Test
-    @DisplayName("회원으로_예약_조회")
-    void findByUser() {
-        // given
-        User user = User.builder()
-                .email("user@test.com")
-                .password("pw")
-                .nickname("user")
-                .role(Role.USER)
-                .build();
-        userRepository.save(user);
+        @Test
+        @DisplayName("회원으로_예약_조회")
+        void findByUser() {
+                // given
+                User user = User.builder()
+                                .email("user@test.com")
+                                .password("pw")
+                                .nickname("user")
+                                .role(Role.USER)
+                                .build();
+                userRepository.save(user);
 
-        Game game = Game.builder()
-                .title("Game 2")
-                .homeTeam("C")
-                .awayTeam("D")
-                .stadium("Stadium")
-                .maxSeats(100)
-                .startTime(LocalDateTime.now())
-                .build();
-        gameRepository.save(game);
+                Game game = Game.builder()
+                                .title("Game 2")
+                                .homeTeam("C")
+                                .awayTeam("D")
+                                .stadium("Stadium")
+                                .maxSeats(100)
+                                .startTime(LocalDateTime.now())
+                                .build();
+                gameRepository.save(game);
 
-        Reservation reservation = Reservation.builder()
-                .user(user)
-                .game(game)
-                .seatNumber("B-1")
-                .ticketCount(1)
-                .reservationTime(LocalDateTime.now())
-                .build();
-        reservationRepository.save(reservation);
+                Ticket reservation = Ticket.builder()
+                                .user(user)
+                                .game(game)
+                                .seatNumber("B-1")
+                                .ticketCount(1)
+                                .reservationTime(LocalDateTime.now())
+                                .build();
+                reservationRepository.save(reservation);
 
-        // when
-        List<Reservation> reservations = reservationRepository.findByUser(user);
+                // when
+                List<Ticket> reservations = reservationRepository.findByUser(user);
 
-        // then
-        assertThat(reservations).hasSize(1);
-        assertThat(reservations.get(0).getSeatNumber()).isEqualTo("B-1");
-    }
+                // then
+                assertThat(reservations).hasSize(1);
+                assertThat(reservations.get(0).getSeatNumber()).isEqualTo("B-1");
+        }
 }

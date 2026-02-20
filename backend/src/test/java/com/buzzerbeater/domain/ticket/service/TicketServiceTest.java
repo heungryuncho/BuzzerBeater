@@ -18,6 +18,7 @@ import com.buzzerbeater.domain.ticket.repository.TicketRepository;
 import com.buzzerbeater.domain.user.entity.Role;
 import com.buzzerbeater.domain.user.entity.User;
 import com.buzzerbeater.domain.user.repository.UserRepository;
+import com.buzzerbeater.domain.ticket.exception.SeatAlreadyBookedException;
 
 @SpringBootTest
 @Transactional // 테스트가 끝나면 데이터가 롤백(삭제)됩니다.
@@ -104,7 +105,7 @@ class TicketServiceTest {
 
         // 3. 검증 (Then)
         // 예외가 발생해야 한다.
-        assertThrows(IllegalArgumentException.class, () -> {
+        assertThrows(SeatAlreadyBookedException.class, () -> {
             ticketService.bookTicket(request2);
         });
 

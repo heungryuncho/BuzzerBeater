@@ -1,6 +1,11 @@
 package com.buzzerbeater.domain.ticket.service;
 
 import org.springframework.stereotype.Service;
+
+import com.buzzerbeater.domain.game.exception.GameNotFoundException;
+import com.buzzerbeater.domain.ticket.exception.SeatAlreadyBookedException;
+import com.buzzerbeater.domain.user.exception.UserNotFoundException;
+import com.buzzerbeater.domain.ticket.exception.TicketNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.buzzerbeater.domain.game.entity.Game;
@@ -29,17 +34,18 @@ public class TicketService {
     public Long bookTicket(TicketDto.CreateTicketRequest request) {
         // 1. 경기 조회
         Game game = gameRepository.findById(request.gameId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 경기입니다."));
+                .orElseThrow(GameNotFoundException::new);
 
         // 2. 사용자 조회
         User user = userRepository.findById(request.userId())
-                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 사용자입니다."));
+                .orElseThrow(UserNotFoundException::new);
 
         // 3. 좌석 중복 확인
-        ticketRepository.findByGameAndSeatNumber(game, request.seatNumber())
-                .ifPresent(t -> {
-                    throw new IllegalArgumentException("이미 예약된 좌석입니다: " + request.seatNumber());
-                });
+        // 해당 경기의 해당 좌석이 이미 예매되었는지 확인
+        boolean isBooked = ticketRepository.existsByGameAndSeatNumber(game, request.seatNumber());
+        if (isBooked) {
+            throw new SeatAlreadyBookedException();
+        }
 
         // 4. 티켓 생성 및 저장
         Ticket ticket = Ticket.builder()

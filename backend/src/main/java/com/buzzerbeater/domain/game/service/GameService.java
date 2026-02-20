@@ -1,6 +1,7 @@
 package com.buzzerbeater.domain.game.service;
 
 import org.springframework.stereotype.Service;
+import com.buzzerbeater.domain.game.exception.GameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.buzzerbeater.domain.game.entity.Game;
@@ -30,7 +31,7 @@ public class GameService {
     // 특정 경기 조회
     public GameDto.GameResponse getGame(Long gameId) {
         Game game = gameRepository.findById(gameId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 경기를 찾을 수 없습니다. id=" + gameId));
+                .orElseThrow(GameNotFoundException::new);
         return GameDto.GameResponse.from(game);
     }
 

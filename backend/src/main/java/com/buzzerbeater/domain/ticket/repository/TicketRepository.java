@@ -17,4 +17,6 @@ public interface TicketRepository extends JpaRepository<Ticket, Long> {
 
     // 특정 경기 + 좌석에 대한 티켓 조회 (중복 예약 방지)
     Optional<Ticket> findByGameAndSeatNumber(Game game, String seatNumber);
+    // 특정 경기의 특정 좌석이 이미 예매되었는지 확인
+    boolean existsByGameAndSeatNumber(Game game, String seatNumber);
 }

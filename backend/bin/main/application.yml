@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: buzzerbeater-backend
+
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/buzzerbeater?serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    username: root
+    password: Aa!199093
+
+  jpa:
+    hibernate:
+      ddl-auto: update # 개발용: DB 스키마 자동 생성 (운영 배포 시 validate로 변경 필요)
+    properties:
+      hibernate:
+        format_sql: true # 실행되는 SQL 예쁘게 출력
+    show-sql: true # 실행되는 SQL 로그에 출력
+
+  profiles:
+    active: local
